@@ -3,17 +3,18 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const bcrypt = require('bcryptjs');
 const axios = require('axios');
+const dotenv = require('dotenv');
 const session = require('express-session');
 
 const app = express();
+dotenv.config();
 
 
-
-// Connect to MongoDB Atlas
-mongoose.connect('mongodb+srv://exclusiveshahzod:UcmrUkzkg5vvwfGb@cluster0.p7nhdnz.mongodb.net/mydatabase')
-  .then(() => console.log('MongoDB connected'))
-  .catch(err => console.log(err));
-
+mongoose.connect(process.env.MONGODB_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+}).then(() => console.log('MongoDB Connected'))
+    .catch(err => console.error('Error connecting to MongoDB:', err));
 // Define User schema
 const userSchema = new mongoose.Schema({
   username: String,
